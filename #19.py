@@ -32,3 +32,7 @@ def transverse_matrix(start, i, h_c_matrix):
         else:
             result_list.append(follows)
 
+
+if __name__=='__main__':
+    print(find_shortest_path([[1,2,3], [5,4,6], [7,8,9]]))
+    

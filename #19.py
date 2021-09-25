@@ -1,3 +1,5 @@
+import math
+
 """
 This problem was asked by Facebook.
 
@@ -7,25 +9,26 @@ Given an N by K matrix where the nth row and kth column represents the cost to b
 """
 
 """
-This is a graph problem. First construct a graph out of all matrix elements: from the starting point, go to all possible
-colors of house 1, with edge cost equal to the building cost. For each vertex build an edge to the vertices of house 2
-except for the one with the same color. Continue until house N. Connect all of them to a destination vertex with
-no edge cost. Then do a dijkstra.
+Hopefully, there are no complexity constraints, otherwise, this would become very ugly.
 I'll assume that the matrix looks like this (minus syntax for better readability:
 matrix = [ [1, [4,  [7,
             2,  5,   8,
             3], 6]   9] ]
 """
 
+result_list = []
 
-def graph_constr(h_c_matrix):
-    graph = {}
-    graph.update({"start": []})
-    node_index = 0
-    # initialize
-    color_index = 0
-    for color in h_c_matrix[0]:
-        graph["start"].append((node_index, color))
-    # fill
-    for row in h_c_matrix:
+
+def find_shortest_path(h_c_matrix):
+    transverse_matrix(0, 0, h_c_matrix)
+    return min(result_list)
+
+
+def transverse_matrix(start, i, h_c_matrix):
+    for entry in h_c_matrix[i]:
+        follows = start + entry
+        if i != len(h_c_matrix)-1:
+            transverse_matrix(follows, i+1, h_c_matrix)
+        else:
+            result_list.append(follows)
 
